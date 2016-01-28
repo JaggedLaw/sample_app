@@ -14,4 +14,6 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
   test "about page" do
     get about_path
   end
+
+
 end
