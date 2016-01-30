@@ -33,4 +33,20 @@ class UserSignupTest < ActionDispatch::IntegrationTest
     assert current_path, user_path(user)
     assert page.has_content?("Welcome to the Sample App!")
   end
+
+  test "user can signup, is automatically logged in, then can log out" do
+    visit signup_path
+    fill_in 'Name', :with => "Newbie"
+    fill_in 'Email', :with => "new@valid.com"
+    fill_in 'Password', :with => "dude5678"
+    fill_in 'Confirmation', :with => "dude5678"
+    click_button('Create my account')
+    user = User.last
+    assert current_path, user_path(user)
+    # ensure that the user is logged in automatically when they sign up:
+    # assert is_logged_in?
+    click_link('Log out')
+    assert current_path, root_path
+    # assert_not is_logged_in?
+  end
 end
